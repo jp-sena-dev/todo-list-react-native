@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FlatList, SafeAreaView, Text, TextInput, View } from 'react-native';
+import { FlatList, SafeAreaView, Text, TextInput, View, TouchableOpacity } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { globlaStyle } from './styles/global';
 
@@ -42,6 +42,10 @@ export default function App() {
               <TextInput onSubmitEditing={({ nativeEvent }) => editTask(task.index, nativeEvent.text, task.item.concluded)}>
                 { task.item.description }
               </TextInput>
+              <TouchableOpacity
+                style={task.item.concluded ? globlaStyle.finishTaskbutton : globlaStyle.unfinishTaskbutton}
+                onPress={({ nativeEvent }) => editTask(task.index, task.item.description, !task.item.concluded)}  
+              />
             </View>
           )}
         />

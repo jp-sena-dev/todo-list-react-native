@@ -9,5 +9,15 @@ export const globlaStyle = StyleSheet.create({
   input: {
     borderColor: '#000',
     borderWidth: 1,
-  }
+  },
+  finishTaskbutton: {
+    height: 30,
+    width: 30,
+    backgroundColor: '#287c6d',
+  },
+  unfinishTaskbutton: {
+    height: 30,
+    width: 30,
+    backgroundColor: '#5d5d60',
+  },
 });
