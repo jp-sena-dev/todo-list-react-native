@@ -22,6 +22,10 @@ export default function App() {
       index === id ? { description, concluded } : data
     )));
   };
+
+  const deleteTask = (id: number,) => {
+    setTasks(tasks?.filter((_task, index) => id !== index))
+  };
   
   console.log(tasks);
 
@@ -44,7 +48,11 @@ export default function App() {
               </TextInput>
               <TouchableOpacity
                 style={task.item.concluded ? globlaStyle.finishTaskbutton : globlaStyle.unfinishTaskbutton}
-                onPress={({ nativeEvent }) => editTask(task.index, task.item.description, !task.item.concluded)}  
+                onPress={() => editTask(task.index, task.item.description, !task.item.concluded)}  
+              />
+              <TouchableOpacity
+                style={globlaStyle.deleteButton}
+                onPress={() => deleteTask(task.index)}  
               />
             </View>
           )}

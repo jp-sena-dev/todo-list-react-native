@@ -10,6 +10,11 @@ export const globlaStyle = StyleSheet.create({
     borderColor: '#000',
     borderWidth: 1,
   },
+  deleteButton: {
+    height: 30,
+    width: 30,
+    backgroundColor: '#ff2222',
+  },
   finishTaskbutton: {
     height: 30,
     width: 30,
