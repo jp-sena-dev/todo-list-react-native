@@ -16,6 +16,12 @@ export default function App() {
     setTasks((prev) => prev ? [...prev as task[], {description, concluded: false}] : [{description, concluded: false}] );
     setCurrentTaskDescription('');
   };
+
+  const editTask = (id: number, description: string, concluded: boolean) => {
+    setTasks(tasks?.map((data, index) => (
+      index === id ? { description, concluded } : data
+    )));
+  };
   
   console.log(tasks);
 
@@ -33,7 +39,9 @@ export default function App() {
           data={tasks}
           renderItem={(task) => (
             <View>
-              <Text>{ task.item.description }</Text>
+              <TextInput onSubmitEditing={({ nativeEvent }) => editTask(task.index, nativeEvent.text, task.item.concluded)}>
+                { task.item.description }
+              </TextInput>
             </View>
           )}
         />
