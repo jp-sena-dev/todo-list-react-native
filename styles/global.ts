@@ -3,24 +3,25 @@ import { Dimensions, StyleSheet } from 'react-native';
 export const globlaStyle = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#F6F9FB',
     justifyContent: 'center',
-    marginTop: 50,
+    marginTop: 30,
   },
   tasksContainer: {
     flex: 2,
     paddingHorizontal: 8,
   },
   mainInput: {
-    borderColor: '#000',
+    borderColor: '#0575F2',
     fontSize: 24,
     paddingLeft: 4,
     paddingVertical: 6,
-    borderRadius: 4,
-    borderWidth: 2,
+    borderRadius: 8,
+    borderWidth: 1.5,
+    width: Dimensions.get('window').width / 1.4,
   },
   taskInput: {
-    width: Dimensions.get('window').width / 1.3,
+    width: Dimensions.get('window').width / 1.4,
     fontSize: 20,
   },
   deleteButton: {
@@ -30,20 +31,21 @@ export const globlaStyle = StyleSheet.create({
     justifyContent: 'center',
   },
   finishTaskbutton: {
-    height: 45,
-    width: 45,
-    borderRadius: 30,
+    height: 25,
+    width: 25,
+    borderRadius: 6,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#287c6d',
+    backgroundColor: '#39A20A',
   },
   unfinishTaskbutton: {
-    height: 45,
-    width: 45,
-    borderRadius: 30,
+    height: 25,
+    width: 25,
+    borderRadius: 6,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#5d5d60',
+    borderColor: '#d7d7d7',
+    borderWidth: 1,
   },
   taskContainer: {
     flex: 1,
@@ -52,8 +54,8 @@ export const globlaStyle = StyleSheet.create({
     justifyContent: 'space-between',
     marginVertical: 8,
     paddingVertical: 12,
-    paddingHorizontal: 4,
-    borderRadius: 2,
+    paddingHorizontal: 12,
+    borderRadius: 8,
     backgroundColor: '#fff',
     shadowColor: "#000",
     shadowOffset: {
@@ -62,11 +64,14 @@ export const globlaStyle = StyleSheet.create({
     },
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
-    elevation: 3,
+    elevation: 2,
   },
-  taskInformations: {
-    rowGap: 8,
-    // flex: 1,
-    // flexDirection: 'column',
-  },
+  buttonAddTask: {
+    width: 52,
+    height: 52,
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#0575F2',
+  }
 });
