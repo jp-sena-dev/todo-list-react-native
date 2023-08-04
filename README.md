@@ -1,6 +1,8 @@
-#  :white_check_mark: Todo list
+#  :white_check_mark: Todo list em React Native
 
 :wave: Boas vindas! Esta aplicação foi desenvolvida para simplificar o gerenciamento de tarefas diárias e aperfeiçoar minhas habilidades em `React Native`.
+
+<img height="740" width="360px" src="https://github.com/joaopedr0sena/todo-list-react-native/assets/85967112/52d702f9-b414-44f8-af0e-61410b7526c2"/>
 
 ## :computer: Pré-requisitos
 
@@ -8,7 +10,7 @@
 - <img src="https://raw.githubusercontent.com/gurayyarar/NodeJsPackageManager/master/images/app.png" alt="package manager" width="20" height="20"/> Gerenciador de Pacotes para NodeJS (NPM ou Yarn)
 - <img src="https://github.com/joaopedr0sena/todo-list-react-native/assets/85967112/3f736cfd-3fe1-402e-badb-ed2337ebcf7a" alt="Expo CLI" width="20" height="20"/> Expo CLi
 
-## :page_facing_up: Instalando a Todo-list
+## :page_facing_up: Instalando a Todo list
 Para instalar o projeto, você precisará clonar o repositório para sua máquina local e instalar as dependências. Portanto, em sua linha de comando (CLI), utilize:
 ```bash
 $ git clone git@github.com:joaopedr0sena/todo-list-react-native.git
