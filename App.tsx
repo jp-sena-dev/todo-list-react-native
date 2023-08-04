@@ -15,6 +15,7 @@ type task = {
 export default function App() {
   const [tasks, setTasks] = useState<task[]>();
   const [currentTaskDescription, setCurrentTaskDescription] = useState('');
+  const [editing, setEditing] = useState(false);
 
   const saveTaks = async () => {
     try {
@@ -44,14 +45,16 @@ export default function App() {
   }, []);
 
   const createTask = (description: string) => {
-    setTasks((prev) => prev ? [...prev as task[], {description, concluded: false}] : [{description, concluded: false}]);
-    setCurrentTaskDescription('');
+    if (description) {
+      setTasks((prev) => prev ? [...prev as task[], {description, concluded: false}] : [{description, concluded: false}]);
+      setCurrentTaskDescription('');
+    }
   };
 
-  const editTask = (id: number, description: string, concluded: boolean) => {
+  const editTask = (index: number, description: string, concluded: boolean) => {
     const updatedTasks = tasks;
     if (updatedTasks) {
-      updatedTasks[id] = { concluded, description };
+      updatedTasks[index] = { concluded, description };
       setTasks([...updatedTasks]);
     }
   };
@@ -85,9 +88,19 @@ export default function App() {
                 <TextInput
                   value={task.item.description}
                   style={globlaStyle.taskInput}
-                  onChange={({ nativeEvent }) => editTask(task.index, nativeEvent.text, task.item.concluded)}
-                >
-                </TextInput>
+                  onFocus={() => setEditing(true)}
+                  onSubmitEditing={() => {
+                      setCurrentTaskDescription('');
+                      setEditing(false);
+                    }
+                  }
+                  onChange={
+                    ({ nativeEvent }) => {
+                      editTask(task.index, nativeEvent.text, task.item.concluded);
+                      setCurrentTaskDescription(nativeEvent.text);
+                    }
+                  }
+                />
                 <TouchableOpacity
                   style={globlaStyle.deleteButton}
                   onPress={() => deleteTask(task.index)}
@@ -102,16 +115,18 @@ export default function App() {
       <View style={{ paddingHorizontal: 14, paddingTop: 8, paddingBottom: 18, flexDirection: 'row', justifyContent: 'space-between' }}>
         <TextInput
           value={currentTaskDescription}
-          style={globlaStyle.mainInput}
+          style={!editing ? globlaStyle.mainInput : globlaStyle.mainInputFullWidth}
           onChangeText={(text: string) => setCurrentTaskDescription(text)}
           onSubmitEditing={() => createTask(currentTaskDescription)}
         />
-        <TouchableOpacity
-          onPress={() => createTask(currentTaskDescription)}
-          style={globlaStyle.buttonAddTask}
-        >
-          <Entypo name="plus" size={24} color="white" />
-        </TouchableOpacity>
+        {!editing && (
+          <TouchableOpacity
+            onPress={() => createTask(currentTaskDescription)}
+            style={globlaStyle.buttonAddTask}
+          >
+            <Entypo name="plus" size={24} color="white" />
+          </TouchableOpacity>
+        )}
       </View>
     </SafeAreaView>
   );

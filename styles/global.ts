@@ -20,6 +20,15 @@ export const globlaStyle = StyleSheet.create({
     borderWidth: 1.5,
     width: Dimensions.get('window').width / 1.4,
   },
+  mainInputFullWidth: {
+    borderColor: '#0575F2',
+    fontSize: 24,
+    paddingLeft: 4,
+    paddingVertical: 6,
+    borderRadius: 8,
+    borderWidth: 1.5,
+    width: Dimensions.get('window').width / 1.1,
+  },
   taskInput: {
     width: Dimensions.get('window').width / 1.4,
     fontSize: 20,
