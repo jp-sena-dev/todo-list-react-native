@@ -2,7 +2,7 @@
 
 :wave: Boas vindas! Esta aplicação foi desenvolvida para simplificar o gerenciamento de tarefas diárias e aperfeiçoar minhas habilidades em `React Native`.
 
-<img height="740" width="360px" src="https://github.com/joaopedr0sena/todo-list-react-native/assets/85967112/52d702f9-b414-44f8-af0e-61410b7526c2"/>
+<img height="407px" width="198px" src="https://github.com/joaopedr0sena/todo-list-react-native/assets/85967112/52d702f9-b414-44f8-af0e-61410b7526c2"/>
 
 ## :computer: Pré-requisitos
 
