@@ -1,28 +1,23 @@
 import { useEffect, useState } from 'react';
 import { SafeAreaView, Text, TextInput, View, TouchableOpacity, ScrollView } from 'react-native';
-import { FontAwesome5 } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
-import { Feather } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import { globlaStyle } from './styles/global';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-type task = {
-  id: number;
-  concluded: boolean;
-  description: string;
-}
+import { Task, TaskData } from './src/components/task';
 
 export default function App() {
-  const [tasks, setTasks] = useState<task[]>();
+  const [tasks, setTasks] = useState<TaskData[]>();
   const [currentTaskDescription, setCurrentTaskDescription] = useState('');
   const [editing, setEditing] = useState(false);
 
   const getTasks = async () => {
     try {
       const res = await AsyncStorage.getItem('tasks');
-      const tasksSaved = await JSON.parse(res);
-      if (res) setTasks(tasksSaved);
+      if (res) {
+        const tasksSaved = await JSON.parse(res);
+        setTasks(tasksSaved);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -30,17 +25,17 @@ export default function App() {
 
   const createTask = (description: string,) => {
     if (description) {
-      const newTask: task = {
+      const newTask: TaskData = {
         id: tasks.length ? tasks[tasks.length - 1].id + 1 : 1,
         description,
-        concluded: false,
+        isConcluded: false,
       }
       setTasks((prev) => (prev ? [...prev, newTask] : [newTask]));
       setCurrentTaskDescription('');
     }
   };
 
-  const editTask = (data: task) => {
+  const editTask = (data: TaskData) => {
     setTasks((prev) => prev?.map((task) => task.id === data.id ? data : task));
   };
 
@@ -77,31 +72,15 @@ export default function App() {
           <Text style={{ color: "#0575F2", fontSize: 60 }}>.</Text>
         </Text>
         <ScrollView>
-          {tasks && (
-            tasks.map((task) => (
-              <View key={task.id} style={globlaStyle.taskContainer}>
-                <TouchableOpacity
-                  style={task.concluded ? globlaStyle.finishTaskbutton : globlaStyle.unfinishTaskbutton}
-                  onPress={() => editTask({...task, concluded: !task.concluded})}
-                >
-                  <Feather name="check" size={15} color="white" />
-                </TouchableOpacity>
-                <TextInput
-                  value={task.description}
-                  style={globlaStyle.taskInput}
-                  onFocus={() => setEditing(true)}
-                  onBlur={() => setEditing(false)}
-                  onChange={({ nativeEvent }) => editTask({...task, description: nativeEvent.text})}
-                />
-                <TouchableOpacity
-                  style={globlaStyle.deleteButton}
-                  onPress={() => deleteTask(task.id)}
-                >
-                  <FontAwesome5  name="trash" size={16} color="red" />
-                </TouchableOpacity>
-              </View>
-            ))
-          )}
+          {tasks && tasks.map((task) => (
+            <Task 
+              key={task.id}
+              data={task}
+              HandleEdit={editTask}
+              deleteTask={deleteTask}
+              setEditing={setEditing}
+            />
+          ))}
         </ScrollView>
       </View>
       <View style={globlaStyle.mainInputContainer}>
@@ -125,4 +104,3 @@ export default function App() {
     </SafeAreaView>
   );
 }
-
