@@ -18,15 +18,6 @@ export default function App() {
   const [currentTaskDescription, setCurrentTaskDescription] = useState('');
   const [editing, setEditing] = useState(false);
 
-  const saveTaks = async () => {
-    try {
-      const value = await JSON.stringify(tasks)
-      await AsyncStorage.setItem('tasks', value);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const getTasks = async () => {
     try {
       const res = await AsyncStorage.getItem('tasks');
@@ -36,14 +27,6 @@ export default function App() {
       console.log(error);
     }
   }
-
-  useEffect(() => {
-    saveTaks();
-  }, [tasks]);
-
-  useEffect(() => {
-    getTasks();
-  }, []);
 
   const createTask = (description: string,) => {
     if (description) {
@@ -65,6 +48,23 @@ export default function App() {
     setTasks(tasks?.filter((task) => task.id !== id));
   };
 
+  const saveTaks = async () => {
+    try {
+      const value = await JSON.stringify(tasks)
+      await AsyncStorage.setItem('tasks', value);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getTasks();
+  }, []);
+
+  useEffect(() => {
+    saveTaks();
+  }, [tasks]);
+  
   return (
     <SafeAreaView style={globlaStyle.container}>
       <StatusBar
@@ -104,23 +104,23 @@ export default function App() {
           )}
         </ScrollView>
       </View>
-      <View style={{ paddingHorizontal: 14, paddingTop: 8, paddingBottom: 18, flexDirection: 'row', justifyContent: 'space-between' }}>
-      {!editing && (
-        <>
-          <TextInput
-            value={currentTaskDescription}
-            style={!editing ? globlaStyle.mainInput : globlaStyle.mainInputFullWidth}
-            onChangeText={(text: string) => setCurrentTaskDescription(text)}
-            onSubmitEditing={() => createTask(currentTaskDescription)}
-          />
-          <TouchableOpacity
-            onPress={() => createTask(currentTaskDescription)}
-            style={globlaStyle.buttonAddTask}
-          >
-            <Entypo name="plus" size={24} color="white" />
-          </TouchableOpacity>
-        </>  
-      )}
+      <View style={globlaStyle.mainInputContainer}>
+        {!editing && (
+          <>
+            <TextInput
+              value={currentTaskDescription}
+              style={!editing ? globlaStyle.mainInput : globlaStyle.mainInputFullWidth}
+              onChangeText={(text: string) => setCurrentTaskDescription(text)}
+              onSubmitEditing={() => createTask(currentTaskDescription)}
+            />
+            <TouchableOpacity
+              onPress={() => createTask(currentTaskDescription)}
+              style={globlaStyle.buttonAddTask}
+            >
+              <Entypo name="plus" size={24} color="white" />
+            </TouchableOpacity>
+          </>  
+        )}
       </View>
     </SafeAreaView>
   );

@@ -10,6 +10,13 @@ export const globlaStyle = StyleSheet.create({
     flex: 2,
     paddingHorizontal: 8,
   },
+  mainInputContainer: {
+    paddingHorizontal: 14,
+    paddingTop: 8,
+    paddingBottom: 18,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   mainInput: {
     borderColor: '#0575F2',
     fontSize: 24,
