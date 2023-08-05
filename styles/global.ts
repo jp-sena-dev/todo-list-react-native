@@ -5,7 +5,6 @@ export const globlaStyle = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F6F9FB',
     justifyContent: 'center',
-    marginTop: 30,
   },
   tasksContainer: {
     flex: 2,

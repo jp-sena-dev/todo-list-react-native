@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { FlatList, SafeAreaView, Text, TextInput, View, TouchableOpacity, ScrollView } from 'react-native';
+import { SafeAreaView, Text, TextInput, View, TouchableOpacity, ScrollView } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
@@ -8,6 +8,7 @@ import { globlaStyle } from './styles/global';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type task = {
+  id: number;
   concluded: boolean;
   description: string;
 }
@@ -44,23 +45,24 @@ export default function App() {
     getTasks();
   }, []);
 
-  const createTask = (description: string) => {
+  const createTask = (description: string,) => {
     if (description) {
-      setTasks((prev) => prev ? [...prev as task[], {description, concluded: false}] : [{description, concluded: false}]);
+      const newTask: task = {
+        id: tasks.length ? tasks[tasks.length - 1].id + 1 : 1,
+        description,
+        concluded: false,
+      }
+      setTasks((prev) => (prev ? [...prev, newTask] : [newTask]));
       setCurrentTaskDescription('');
     }
   };
 
-  const editTask = (index: number, description: string, concluded: boolean) => {
-    const updatedTasks = tasks;
-    if (updatedTasks) {
-      updatedTasks[index] = { concluded, description };
-      setTasks([...updatedTasks]);
-    }
+  const editTask = (data: task) => {
+    setTasks((prev) => prev?.map((task) => task.id === data.id ? data : task));
   };
 
   const deleteTask = (id: number,) => {
-    setTasks(tasks?.filter((_task, index) => id !== index));
+    setTasks(tasks?.filter((task) => task.id !== id));
   };
 
   return (
@@ -69,64 +71,56 @@ export default function App() {
         animated={true}
         style="auto"
       />
-      <ScrollView>
-        <View style={globlaStyle.tasksContainer}>
-          <Text style={{ fontSize: 52 }}>
-            Todo
-            <Text style={{ color: "#0575F2", fontSize: 60 }}>.</Text>
-          </Text>
-          <FlatList
-            data={tasks}
-            renderItem={(task) => (
-              <View style={globlaStyle.taskContainer}>
+      <View style={globlaStyle.tasksContainer}>
+        <Text style={{ fontSize: 52 }}>
+          Todo
+          <Text style={{ color: "#0575F2", fontSize: 60 }}>.</Text>
+        </Text>
+        <ScrollView>
+          {tasks && (
+            tasks.map((task) => (
+              <View key={task.id} style={globlaStyle.taskContainer}>
                 <TouchableOpacity
-                  style={task.item.concluded ? globlaStyle.finishTaskbutton : globlaStyle.unfinishTaskbutton}
-                  onPress={() => editTask(task.index, task.item.description, !task.item.concluded)}
+                  style={task.concluded ? globlaStyle.finishTaskbutton : globlaStyle.unfinishTaskbutton}
+                  onPress={() => editTask({...task, concluded: !task.concluded})}
                 >
                   <Feather name="check" size={15} color="white" />
                 </TouchableOpacity>
                 <TextInput
-                  value={task.item.description}
+                  value={task.description}
                   style={globlaStyle.taskInput}
                   onFocus={() => setEditing(true)}
-                  onSubmitEditing={() => {
-                      setCurrentTaskDescription('');
-                      setEditing(false);
-                    }
-                  }
-                  onChange={
-                    ({ nativeEvent }) => {
-                      editTask(task.index, nativeEvent.text, task.item.concluded);
-                      setCurrentTaskDescription(nativeEvent.text);
-                    }
-                  }
+                  onBlur={() => setEditing(false)}
+                  onChange={({ nativeEvent }) => editTask({...task, description: nativeEvent.text})}
                 />
                 <TouchableOpacity
                   style={globlaStyle.deleteButton}
-                  onPress={() => deleteTask(task.index)}
+                  onPress={() => deleteTask(task.id)}
                 >
                   <FontAwesome5  name="trash" size={16} color="red" />
                 </TouchableOpacity>
               </View>
-            )}
-          />
-        </View>
-      </ScrollView>
+            ))
+          )}
+        </ScrollView>
+      </View>
       <View style={{ paddingHorizontal: 14, paddingTop: 8, paddingBottom: 18, flexDirection: 'row', justifyContent: 'space-between' }}>
-        <TextInput
-          value={currentTaskDescription}
-          style={!editing ? globlaStyle.mainInput : globlaStyle.mainInputFullWidth}
-          onChangeText={(text: string) => setCurrentTaskDescription(text)}
-          onSubmitEditing={() => createTask(currentTaskDescription)}
-        />
-        {!editing && (
+      {!editing && (
+        <>
+          <TextInput
+            value={currentTaskDescription}
+            style={!editing ? globlaStyle.mainInput : globlaStyle.mainInputFullWidth}
+            onChangeText={(text: string) => setCurrentTaskDescription(text)}
+            onSubmitEditing={() => createTask(currentTaskDescription)}
+          />
           <TouchableOpacity
             onPress={() => createTask(currentTaskDescription)}
             style={globlaStyle.buttonAddTask}
           >
             <Entypo name="plus" size={24} color="white" />
           </TouchableOpacity>
-        )}
+        </>  
+      )}
       </View>
     </SafeAreaView>
   );
