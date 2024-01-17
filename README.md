@@ -1,8 +1,8 @@
-#  :white_check_mark: Todo list em React Native
+![todo-react-native](https://github.com/joaopedr0sena/todo-list-react-native/assets/85967112/b8f80a34-6329-454e-8ffa-f64767ab7f4d)#  :white_check_mark: Todo list em React Native
 
 :wave: Boas vindas! Esta aplicação foi desenvolvida para simplificar o gerenciamento de tarefas diárias e aperfeiçoar minhas habilidades em `React Native`.
 
-<img height="407px" width="198px" src="https://github.com/joaopedr0sena/todo-list-react-native/assets/85967112/52d702f9-b414-44f8-af0e-61410b7526c2"/>
+<img height="407px" width="198px" src="https://github.com/joaopedr0sena/todo-list-react-native/assets/85967112/fadc1abb-1da4-473c-9dbf-59241a07b9dc"/>
 
 ## :computer: Pré-requisitos
 
